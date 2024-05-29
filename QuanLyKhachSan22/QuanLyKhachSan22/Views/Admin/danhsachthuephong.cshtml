@@ -1,0 +1,60 @@
+﻿@model IEnumerable<QuanLyKhachSan22.Models.Phieudatphong>
+@{
+    ViewData["Title"] = "danhsachthuephong";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh Sách Thuê Phòng</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID Kh
+            <th>
+                ID P
+            <th>
+                ID NV
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayDatPhong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayTraPhong)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.TongTien)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdKh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdNv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayDatPhong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayTraPhong)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TongTien)
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<QuanLyKhachSan22.Models.Phong>
+
+@{
+    ViewData["Title"] = "QLPhong";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>QLPhong</h1>
+
+
+<p>@TempData["Message"]</p>
+
+<p>
+    <a href="/ThemPhong">Create New</a>
+</p>
+<form asp-action="QLPhong" method="get">
+    <div class="form-group">
+        <label for="strSearch">Tìm Kiếm:</label>
+        <input type="text" class="form-control" id="searchInput" name="searchInput" placeholder="Tìm Kiếm...">
+    </div>
+    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiaP)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.TinhTrang)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaP)
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.TinhTrang)
+            </td>
+            
+            <td>
+                <a href="/SuaPhong">Edit</a> ||
+                <a asp-action="XoaPhong" asp-route-id="@item.IdP">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

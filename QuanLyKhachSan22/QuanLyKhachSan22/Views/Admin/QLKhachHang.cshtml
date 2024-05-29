@@ -1,0 +1,66 @@
+﻿@model IEnumerable<QuanLyKhachSan22.Models.Khachhang>
+
+@{
+    ViewData["Title"] = "QLKhachHang";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>Danh sách khách hàng </h1>
+<p>@TempData["Message"]</p>
+<p>
+    <a href="/ThemKH">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Họ tên
+            </th>
+            <th>
+                Ngày sinh
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTenKh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinhKh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SdtKh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailKh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChiKh)
+                </td>
+                <td>
+                </td>
+                <td>
+                    <a href="/SuaKH">Edit</a> |
+
+                    <a asp-action="XoaKH" asp-route-IdKH="@item.IdKh">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

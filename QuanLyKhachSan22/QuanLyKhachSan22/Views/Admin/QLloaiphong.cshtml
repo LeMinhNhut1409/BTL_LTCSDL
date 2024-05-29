@@ -1,0 +1,42 @@
+﻿@model IEnumerable<QuanLyKhachSan22.Models.Loaiphong>
+@{
+    ViewData["Title"] = "QLloaiphong";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<p>@TempData["Message"]</p>
+<p>
+    <a href="/ThemLP">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên loại phòng
+            </th>
+            <th>
+                Mô tả loại phòng
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenLp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoTaLp)
+                </td>
+                <td>
+                    <a  href="/SuaLP">Edit</a> |
+
+                    <a asp-action="XoaLP" asp-route-IdLp="@item.IdLp">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

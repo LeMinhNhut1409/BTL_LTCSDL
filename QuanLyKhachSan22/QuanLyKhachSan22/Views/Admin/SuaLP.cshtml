@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "SuaLP";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@model QuanLyKhachSan22.Models.Loaiphong
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "SuaLP";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>SuaLP</h1>
+<form action="/SuaLP" method="post">
+
+
+    <div class="form-group">
+        <label>Tên Loại Phòng</label>
+        <input type="text" class="form-control" value="@Model.TenLp" id="TenLp" name="TenLp" />
+    </div>
+    <div class="form-group">
+        <label>Mô Tả Loại Phòng</label>
+        <input type="text" class="form-control" value="@Model.MoTaLp" id="MoTaLp" name="MoTaLp" />
+    </div>
+    <button class="btn btn-primary" type="submit">Sửa</button>
+
+</form>
+

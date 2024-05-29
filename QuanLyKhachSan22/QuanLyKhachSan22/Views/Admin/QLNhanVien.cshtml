@@ -1,0 +1,58 @@
+﻿@model IEnumerable<QuanLyKhachSan22.Models.Nhanvien>
+@{
+    ViewData["Title"] = "QLNhanVien";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>QLNhanVien</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HoTenNv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SdtNv)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.NgaySinhNv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pass)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTenNv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SdtNv)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinhNv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pass)
+                </td>
+
+                <td>
+                    <a asp-action="Xoanv" asp-route-IdNv="@item.IdNv">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

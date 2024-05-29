@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "ThemPhong";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>ThemPhong</h1>
+<form action="/Admin/ThemPhong" method="post">
+    
+    <div class="form-group">
+        <label>Tên Phòng</label>
+        <input type="text" class="form-control" id="TenP" name="TenP" />
+    </div>
+    <div class="form-group">
+        <label>Giá Phòng</label>
+        <input type="text" class="form-control" id="GiaP" name="GiaP" />
+    </div>
+    <div class="form-group">
+        <label>Tình trạng</label>
+        <input type="text" class="form-control" id="TinhTrang" name="TinhTrang" />
+    </div>
+    <button class="btn btn-primary" type="submit">Thêm</button>
+
+</form>
