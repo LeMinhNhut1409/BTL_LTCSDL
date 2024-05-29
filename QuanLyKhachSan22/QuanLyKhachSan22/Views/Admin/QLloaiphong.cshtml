@@ -3,19 +3,22 @@
     ViewData["Title"] = "QLloaiphong";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<p>@TempData["Message"]</p>
+<h2>Danh Sách Loại Phòng</h2>
+
 <p>
-    <a href="/ThemLP">Create New</a>
+    <a asp-action="ThemLoaiPhongMoi">Thêm Loại Phòng Mới </a>
 </p>
+<p>@TempData["Message"]</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Tên loại phòng
+                Tên Loại Phòng
             </th>
             <th>
-                Mô tả loại phòng
+                Mô Tả Loại Phòng
             </th>
             <th></th>
         </tr>
@@ -31,12 +34,10 @@
                     @Html.DisplayFor(modelItem => item.MoTaLp)
                 </td>
                 <td>
-                    <a  href="/SuaLP">Edit</a> |
-
-                    <a asp-action="XoaLP" asp-route-IdLp="@item.IdLp">Delete</a>
+                    <a asp-action="SuaLP" asp-route-IdLp="@item.IdLp">Sửa LP</a> |
+                    <a asp-action="XoaLP" asp-route-IdLp="@item.IdLp">Xóa LP</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-

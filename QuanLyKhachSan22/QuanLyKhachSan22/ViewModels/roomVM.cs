@@ -6,6 +6,6 @@
         public string TenPhong { get; set; }
         public string Hinh { get; set; }
         public int GiaPhong { get; set; }
-        public string TinhTrang { get; set; }
+        public bool TinhTrang { get; set; } = false;
     }
 }

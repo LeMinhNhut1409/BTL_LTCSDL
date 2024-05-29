@@ -1,0 +1,122 @@
+﻿create database QLKS22
+go
+USE QLKS22
+GO
+
+CREATE TABLE NHANVIEN
+(
+	ID_NV INT PRIMARY KEY IDENTITY, 
+	HoTen_NV NVARCHAR(100) NOT NULL,
+	NgaySinh_NV DATE NOT NULL,
+	Username VARCHAR(20) NOT NULL,
+	Pass VARCHAR(30) NOT NULL,
+	Sdt_NV VARCHAR(12) NOT NULL
+	
+)
+
+INSERT INTO NHANVIEN(HoTen_NV, NgaySinh_NV,Username, Pass, Sdt_NV)
+VALUES (N'Lê Minh Nhựt','09/14/1995','user1','P@ssw0rd','09763838')
+INSERT INTO NHANVIEN( HoTen_NV, NgaySinh_NV,Username, Pass, Sdt_NV)
+VALUES (N'Tống Thị Thu Hiền','02/02/1996','user2','P@ssw0rd','09327327')
+INSERT INTO NHANVIEN(HoTen_NV, NgaySinh_NV,Username, Pass, Sdt_NV)
+VALUES (N'Võ Kiều Mi','09/07/1995','qq','P@ssw0rd','083273287')
+
+
+CREATE TABLE KHACHHANG
+(
+	ID_KH INT PRIMARY KEY NOT NULL,
+	HoTen_KH NVARCHAR(100) NOT NULL,
+	NgaySinh_KH DATE NOT NULL,
+	Sdt_KH VARCHAR(12) NOT NULL,
+	Email_KH VARCHAR(50) NOT NULL,
+	DiaChiKH NVARCHAR(50) NOT NULL
+)
+INSERT INTO KHACHHANG(ID_KH, HoTen_KH, NgaySinh_KH, Sdt_KH, Email_KH, DiaChiKH)
+VALUES (101,N'Lê Minh Nhựt','09/14/1995','0122228888','leminhnhut123@gmail.com',N'497/6 Phan Văn Trị, Phường 5, Gò Vấp')
+INSERT INTO KHACHHANG(ID_KH, HoTen_KH, NgaySinh_KH, Sdt_KH, Email_KH, DiaChiKH)
+VALUES (102,N'Tống Thị Thu Hiền','07/10/2003','0128999899','thuhienkh098@gmail.com',N'80/28/32 Dương Quảng Hàm, Phường 5, Gò Vấp')
+INSERT INTO KHACHHANG(ID_KH, HoTen_KH, NgaySinh_KH, Sdt_KH, Email_KH, DiaChiKH)
+VALUES (103,N'Võ Kiều Mi','09/07/2003','0233308888','vokieumikh356@gmail.com',N'128 Đào Xuân Tích, Nhà Bè')
+INSERT INTO KHACHHANG(ID_KH, HoTen_KH, NgaySinh_KH, Sdt_KH, Email_KH, DiaChiKH)
+VALUES (104,N'Lê Minh Tâm','08/09/2000','0901256789','minhtamkh324@gmail.com',N'317 Võ Văn Tần')
+INSERT INTO KHACHHANG(ID_KH, HoTen_KH, NgaySinh_KH, Sdt_KH, Email_KH, DiaChiKH)
+VALUES (105,N'Trần Thị Huyền Trân','10/05/2004','0909080706','huyentrankh879@gmail.com',N'417/4 Phường 8, Tân Bình')
+
+CREATE TABLE LOAIPHONG
+(
+	ID_LP INT PRIMARY KEY NOT NULL,
+	Ten_LP NVARCHAR(100) NOT NULL,
+	MoTa_LP NVARCHAR(100) NOT NULL
+	
+)
+
+INSERT INTO LOAIPHONG(ID_LP, Ten_LP,MoTa_LP)
+VALUES (1,N'Phòng 1 giường',N'Đầy đủ tiện nghi, có ban công thoáng mát, có bếp trong phòng')
+INSERT INTO LOAIPHONG(ID_LP, Ten_LP,MoTa_LP)
+VALUES (2,N'Phòng 2 giường',N'Đầy đủ tiện nghi, có ban công thoáng mát, có bếp trong phòng, rộng rãi')
+
+CREATE TABLE PHONG
+(
+	ID_P INT PRIMARY KEY ,
+	Ten_P CHAR(6) NOT NULL,
+	ID_LP INT,
+	Gia_P INT,
+	HinhAnhPhong NVARCHAR(100) NULL,
+	TinhTrang bit not null default 1,
+    FOREIGN KEY (ID_LP) REFERENCES LOAIPHONG(ID_LP)
+)
+
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (1,'Q1P001',1,'500000',N'r_1.jpg',1)
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (2,'Q1P002',1,'500000',N'r_2.jpg',0)
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (3,'Q1P003',2,'1000000',N'r_3.jpg',0)
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (4,'Q1P004',2,'1000000',N'r_4.jpg',1)
+
+
+INSERT INTO PHONG(ID_P,Ten_P,ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (5,'Q3P001',1,'500000',N'r_1.jpg',1)
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (6,'Q3P002',1,'500000',N'r_2.jpg',0)
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (7,'Q3P003',2,'1000000',N'r_3.jpg',0)
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (8,'Q3P004',2,'100000',N'r_4.jpg',1)
+
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (9,'VTP001',1,'500000',N'r_1.jpg',1)
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (10,'VTP002',1,'500000',N'r_2.jpg',0)
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (11,'VTP003',2,'1000000',N'r_3.jpg',0)
+INSERT INTO PHONG(ID_P,Ten_P, ID_LP,Gia_P, HinhAnhPhong ,TinhTrang)
+VALUES (12,'VTP004',2,'1000000',N'r_4.jpg',1)
+
+CREATE TABLE PHIEUDATPHONG
+(
+	ID_PDP INT PRIMARY KEY,
+	ID_KH INT,
+	ID_P INT,
+	ID_NV INT,
+	NgayDatPhong DATE NOT NULL,
+	NgayTraPhong DATE NOT NULL,
+	TongTien DECIMAL(10,2) NOT NULL,
+	FOREIGN KEY (ID_KH) REFERENCES KHACHHANG(ID_KH),
+    FOREIGN KEY (ID_P) REFERENCES PHONG(ID_P),
+	FOREIGN KEY (ID_NV) REFERENCES NHANVIEN(ID_NV)
+)
+
+
+DELETE FROM [PHIEUDATPHONG];
+
+CREATE TABLE THONGKE
+(
+	ID_TK INT PRIMARY KEY,
+	ID_PDP INT,
+	ThanhTien DECIMAL(10,2) NOT NULL,
+	NgayThanhToan DATE NOT NULL,
+	FOREIGN KEY (ID_PDP) REFERENCES PHIEUDATPHONG(ID_PDP)
+)
+DELETE FROM [THONGKE];

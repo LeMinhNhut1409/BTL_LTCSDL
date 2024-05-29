@@ -8,7 +8,10 @@ namespace QuanLyKhachSan22.Controllers
 {
     public class AdminController : Controller
     {
+
+
         Qlks1Context db = new Qlks1Context();
+
         public IActionResult Index()
         {
             var userRole = HttpContext.Session.GetString("Username");
@@ -54,71 +57,95 @@ namespace QuanLyKhachSan22.Controllers
 
         [HttpGet]
         [Route("QLPhong")]
-        public IActionResult QLPhong(string searchInput)
+        public IActionResult QLPhong(bool? tinhTrangPhong, decimal? to, decimal? from, int? IdLp)
         {
-            var lstphong = db.Phongs.ToList();
-
-            // Kiểm tra dữ liệu
-            if (!string.IsNullOrEmpty(searchInput))
+            var timKiem = db.Phongs.AsQueryable();
+            if (tinhTrangPhong.HasValue)
             {
-                //kiếm tra dữ liệu có phải giá không?
-                if (int.TryParse(searchInput, out int gia))
-                {
-                    lstphong = lstphong.Where(x => x.GiaP == gia).ToList();
-                }
-                else
-                {
-                    lstphong = lstphong.Where(x => x.TinhTrang.Contains(searchInput)).ToList();
-                }
+
+                timKiem = timKiem.Where(r => r.TinhTrang == tinhTrangPhong.Value);
             }
-
-            return View(lstphong);
+            if (to.HasValue)
+            {
+                timKiem = timKiem.Where(r => r.GiaP >= to.Value);
+            }
+            if (from.HasValue)
+            {
+                timKiem = timKiem.Where(r => r.GiaP <= from.Value);
+            }
+            if (IdLp.HasValue)
+            {
+                timKiem = timKiem.Where(r => r.IdLp == IdLp.Value);
+            }
+            return View(timKiem.ToList());
 
         }
-        //Them Phong
-        [Route("ThemPhong")]
-        public ActionResult ThemPhong()
-        {
-            return View();
-        }
-        [HttpPost]
-
-        public ActionResult ThemPhong(Phong P)
-        {
-            db.Phongs.Add(P);
-            db.SaveChangesAsync();
-            return RedirectToAction("QlPhong");
-        }
-
-        // Sửa phòng
-
-        [Route("SuaPhong")]
+        //checkout về 0
+        [Route("checkout")]
         [HttpGet]
-        public ActionResult SuaPhong(int id)
+        public IActionResult Checkout(int id)
         {
-            Phong p = db.Phongs.FirstOrDefault(x => x.IdP == id);
-            if (p == null)
+            var phong = db.Phongs.Find(id);
+            if (phong == null)
             {
                 return NotFound();
             }
 
-            return View(p);
-        }
-        [Route("SuaPhong")]
-        [HttpPost]
-
-        public ActionResult SuaPhong(Phong p)
-        {
-            Phong up = db.Phongs.FirstOrDefault(x => x.IdP == p.IdP);
-            if (up != null)
+            if (phong.TinhTrang)
             {
-                up.TenP = p.TenP;
-                up.GiaP = p.GiaP;
-                up.TinhTrang = p.TinhTrang;
+                phong.TinhTrang = false;
+                db.Update(phong);
                 db.SaveChanges();
+                TempData["SuccessMessage"] = $"Room {phong.IdP} has been checked out.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = $"Room {phong.IdP} is already available.";
             }
 
-            return RedirectToAction("QlPhong");
+            return RedirectToAction(nameof(QLPhong));
+        }
+        //Them phong
+        [Route("themphong")]
+        public IActionResult ThemPhong()
+        {
+            ViewBag.IdLp = new SelectList(db.Loaiphongs.ToList(), "IdLp", "TenLp");
+            return View();
+        }
+        [Route("themphong")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemPhong(Phong phong)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Phongs.Add(phong);
+                db.SaveChanges();
+                return RedirectToAction("QLPhong");
+            }
+            return View(phong);
+        }
+
+        //Sua phong
+        [Route("suaphong")]
+        public IActionResult SuaPhong(int IdP)
+        {
+            ViewBag.IdLp = new SelectList(db.Loaiphongs.ToList(), "IdLp", "TenLp");
+            var phong = db.Phongs.Find(IdP);
+            return View(phong);
+        }
+        [Route("suaphong")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaPhong(Phong phong)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Update(phong);
+                db.SaveChanges();
+                return RedirectToAction("QLPhong");
+            }
+            return View(phong);
         }
 
         //Xoa phong
@@ -136,23 +163,33 @@ namespace QuanLyKhachSan22.Controllers
         //Quản Lý loại phòng
         [HttpGet]
         [Route("QLloaiphong")]
-        public IActionResult QLloaiphong()
+        public IActionResult QLLoaiphong()
         {
-            var lstlp = db.Loaiphongs.ToList();
-            return View(lstlp);
+            var lstLoaiPhong = db.Loaiphongs.ToList();
+            return View(lstLoaiPhong);
+
         }
 
         //thêm loại phòng
         [Route("ThemLP")]
-        public ActionResult ThemLP(Loaiphong lp)
+        public IActionResult ThemLP()
+        {
+            //ViewBag.IdLp = new SelectList(db.Loaiphongs.ToList(), "IdLp", "TenLp");
+            return View();
+        }
+        [Route("ThemLP")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemLoaiPhongMoi(Loaiphong loaiphong)
         {
             if (ModelState.IsValid)
             {
-                db.Loaiphongs.Add(lp);
-                db.SaveChangesAsync();
-                return RedirectToAction("QLloaiphong");
+
+                db.Loaiphongs.Add(loaiphong);
+                db.SaveChanges();
+                return RedirectToAction("QLLoaiphong");
             }
-            return View(lp);
+            return View(loaiphong);
         }
 
         //Xoa loai phong
@@ -161,40 +198,33 @@ namespace QuanLyKhachSan22.Controllers
         public IActionResult XoaLP(int IdLp)
         {
             db.Remove(db.Loaiphongs.Find(IdLp));
-            db.SaveChangesAsync();
+            db.SaveChanges();
             TempData["Message"] = "Loại phòng đã được xóa!!!";
-            return RedirectToAction("QLloaiphong");
+            return RedirectToAction("QLLoaiphong");
 
         }
 
         //sửa loại phòng
         [Route("SuaLP")]
         [HttpGet]
-        public ActionResult SuaLP(int id)
+        public IActionResult SuaLP(int IdLp)
         {
-            Loaiphong lp = db.Loaiphongs.FirstOrDefault(x => x.IdLp == id);
-            if (lp == null)
-            {
-                return NotFound();
-            }
-
-            return View(lp);
+            //ViewBag.IdLp = new SelectList(db.Loaiphongs.ToList(), "IdLp", "TenLp");
+            var loaiphong = db.Loaiphongs.Find(IdLp);
+            return View(loaiphong);
         }
-
         [Route("SuaLP")]
         [HttpPost]
-
-        public ActionResult SuaLP(Loaiphong editLP)
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaLoaiPhong(Loaiphong loaiphong)
         {
-            Loaiphong up = db.Loaiphongs.FirstOrDefault(x => x.IdLp == editLP.IdLp);
-            if (up != null)
+            if (ModelState.IsValid)
             {
-                up.TenLp = editLP.TenLp;
-                up.MoTaLp = editLP.MoTaLp;
-                db.SaveChangesAsync();
+                db.Update(loaiphong);
+                db.SaveChanges();
+                return RedirectToAction("QLLoaiphong");
             }
-
-            return RedirectToAction("QLloaiphong");
+            return View(loaiphong);
         }
 
         //QLNhanVien
@@ -291,6 +321,7 @@ namespace QuanLyKhachSan22.Controllers
         [Route("ThemPhieuThuePhong")]
         public IActionResult ThemPhieuThuePhong()
         {
+
             // Lấy danh sách khách hàng, nhân viên và phòng để hiển thị trong dropdown
             ViewBag.IdKh = new SelectList(db.Khachhangs.ToList(), "IdKh", "HoTenKh");
             ViewBag.IdNv = new SelectList(db.Nhanviens.ToList(), "IdNv", "HoTenNv");
@@ -298,6 +329,7 @@ namespace QuanLyKhachSan22.Controllers
 
             // Trả về view để hiển thị form nhập liệu
             return View();
+
         }
 
         [Route("ThemPhieuThuePhong")]
@@ -305,6 +337,8 @@ namespace QuanLyKhachSan22.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ThemPhieuThuePhong(Phieudatphong pdp, Thongke tk)
         {
+
+
             if (ModelState.IsValid)
             {
                 // Kiểm tra xem có bản ghi nào với ID_PDP giống như bản ghi mới không
@@ -318,7 +352,8 @@ namespace QuanLyKhachSan22.Controllers
 
                 // Thêm bản ghi mới
                 db.Phieudatphongs.Add(pdp);
-                db.SaveChangesAsync();
+                db.SaveChanges();
+
 
                 // Tạo bản ghi thống kê
 
@@ -331,7 +366,8 @@ namespace QuanLyKhachSan22.Controllers
                     NgayThanhToan = pdp.NgayTraPhong
                 };
                 db.Thongkes.Add(thongKe);
-                db.SaveChangesAsync();
+                db.SaveChanges();
+
 
 
                 // Chuyển hướng đến trang danh sách thuê phòng
@@ -340,13 +376,15 @@ namespace QuanLyKhachSan22.Controllers
 
             // Nếu dữ liệu nhập vào không hợp lệ, trả về view để hiển thị lại form
             return View(pdp);
+
+
         }
 
         //trang thong ke
         public IActionResult ThongKe()
-        {   
-           var lstThongke = db.Thongkes.ToList();
-           return View(lstThongke);
+        {
+            var lstThongke = db.Thongkes.ToList();
+            return View(lstThongke);
         }
 
     }

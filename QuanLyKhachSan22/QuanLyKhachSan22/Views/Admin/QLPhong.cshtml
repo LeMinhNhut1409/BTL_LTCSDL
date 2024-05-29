@@ -4,59 +4,91 @@
     ViewData["Title"] = "QLPhong";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<h1>QLPhong</h1>
 
 
 <p>@TempData["Message"]</p>
 
+<h1>Danh Sách Phòng</h1>
 <p>
-    <a href="/ThemPhong">Create New</a>
+    <a asp-action="ThemPhong"> Thêm Phòng Mới</a>
 </p>
-<form asp-action="QLPhong" method="get">
+
+<form asp-action="QLPhong" method="get" class="form-inline">
     <div class="form-group">
-        <label for="strSearch">Tìm Kiếm:</label>
-        <input type="text" class="form-control" id="searchInput" name="searchInput" placeholder="Tìm Kiếm...">
+        <label>
+            <a>Tình trạng phòng:</a>
+            <input type="checkbox" name="tinhTrangPhong" value="true" />
+        </label>
     </div>
-    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    Giá từ <input type="number" name="to" />
+    đến <input type="number" name="from" />
+    Nhập loại phòng <input type="number" name="IdLp" />
+    <button>Tìm</button>
 </form>
 
+<div class=" col-md-12">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Tên Phòng
+                </th>
+                <th>
+                    Giá Phòng
+                </th>
+                <th>
+                    Hình Ảnh Phòng
+                </th>
+                <th>
+                    Tình Trạng
+                </th>
+                <th>
+                    Id Loại Phòng
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GiaP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HinhAnhPhong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TinhTrang)
+                    @(item.TinhTrang ? "Phòng đã thuê" : "Phòng còn trống")
+                </td>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TenP)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GiaP)
-            </th>
-            
-            <th>
-                @Html.DisplayNameFor(model => model.TinhTrang)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GiaP)
-            </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.TinhTrang)
-            </td>
-            
-            <td>
-                <a href="/SuaPhong">Edit</a> ||
-                <a asp-action="XoaPhong" asp-route-id="@item.IdP">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdLp)
+                </td>
+
+                <td>
+                    <a asp-action="SuaPhong" asp-route-IdP="@item.IdP">Sửa phòng</a> |
+                    <a asp-action="XoaPhong" asp-route-IdP="@item.IdP">Xóa phòng</a> |
+                </td>
+                <td>@(item.TinhTrang ? "Yes" : "No")</td>
+                <td>
+                    @if (item.TinhTrang)
+                    {
+                        <a asp-action="Checkout" asp-route-id="@item.IdP" class="btn btn-primary">Checkout</a>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+
+
+
+
+

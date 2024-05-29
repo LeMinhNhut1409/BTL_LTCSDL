@@ -1,22 +1,43 @@
-﻿
+﻿@model QuanLyKhachSan22.Models.Loaiphong
 @{
     ViewData["Title"] = "ThemLP";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>ThemLP</h1>
-<form action="/ThemLP" method="post">
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h1>Thêm Loại Phòng Mới</h1>
 
-    <div class="form-group">
-        <label>Tên Loại Phòng</label>
-        <input type="text" class="form-control" id="TenLp" name="TenLp" />
+<h4>Loại phòng</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ThemLP">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdLp" class="control-label"></label>
+                <input asp-for="IdLp" class="form-control" />
+                <span asp-validation-for="IdLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenLp" class="control-label"></label>
+                <input asp-for="TenLp" class="form-control" />
+                <span asp-validation-for="TenLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTaLp" class="control-label"></label>
+                <input asp-for="MoTaLp" class="form-control" />
+                <span asp-validation-for="MoTaLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
-   
-    <div class="form-group">
-        <label>Mô Tả Loại Phòng</label>
-        <input type="text" class="form-control" id="MoTaLp" name="MoTaLp" />
-    </div>
-    <button class="btn btn-primary" type="submit">Thêm</button>
+</div>
 
-</form>
+<div>
+    <a asp-action="Index">@Html.ActionLink("Về trang chủ", "QLLoaiphong")</a>
+</div>
+
+
 

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\LTCSDL\\QuanLyKhachSan22\\QuanLyKhachSan22\\QuanLyKhachSan22.csproj": {}
+    "D:\\LTGD\\QuanLyKhachSan22\\QuanLyKhachSan22\\QuanLyKhachSan22.csproj": {}
   },
   "projects": {
-    "D:\\LTCSDL\\QuanLyKhachSan22\\QuanLyKhachSan22\\QuanLyKhachSan22.csproj": {
+    "D:\\LTGD\\QuanLyKhachSan22\\QuanLyKhachSan22\\QuanLyKhachSan22.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\LTCSDL\\QuanLyKhachSan22\\QuanLyKhachSan22\\QuanLyKhachSan22.csproj",
+        "projectUniqueName": "D:\\LTGD\\QuanLyKhachSan22\\QuanLyKhachSan22\\QuanLyKhachSan22.csproj",
         "projectName": "QuanLyKhachSan22",
-        "projectPath": "D:\\LTCSDL\\QuanLyKhachSan22\\QuanLyKhachSan22\\QuanLyKhachSan22.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\LTCSDL\\QuanLyKhachSan22\\QuanLyKhachSan22\\obj\\",
+        "projectPath": "D:\\LTGD\\QuanLyKhachSan22\\QuanLyKhachSan22\\QuanLyKhachSan22.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "D:\\LTGD\\QuanLyKhachSan22\\QuanLyKhachSan22\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -92,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

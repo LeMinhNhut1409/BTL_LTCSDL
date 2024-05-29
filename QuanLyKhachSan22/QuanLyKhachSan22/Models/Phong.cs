@@ -15,7 +15,7 @@ public partial class Phong
 
     public string? HinhAnhPhong { get; set; }
 
-    public string? TinhTrang { get; set; }
+    public bool TinhTrang { get; set; } = false;
 
     public virtual Loaiphong? IdLpNavigation { get; set; }
 
